@@ -7,70 +7,29 @@
     <title>Nous contacter</title>
 </head>
 
-<body style="background: rgb(0,0,0);">
+<body>
     
     <section class="d-flex align-items-center align-items-md-center">
         <div class="container">
-            <h1 style="font-family: 'Advent Pro', sans-serif;text-decoration: underline;text-align: center;color: rgb(255,255,255);">Contactez-Nous</h1>
             <div class="row">
                 <div class="col-md-12">
                     <section>
-                        <h2 class="text-center" style="color: rgb(255,255,255);font-family: 'Advent Pro', sans-serif;font-size: 40px;">Nos horaires:</h2>
-                        <!-- Add div elements to display opening hours for each day -->
-                        <div id="mondayHours" style="text-align: center; color: white; font-family: 'Advent Pro', sans-serif;"></div>
-                        <div id="tuesdayHours" style="text-align: center; color: white; font-family: 'Advent Pro', sans-serif;"></div>
-                        <div id="wednesdayHours" style="text-align: center; color: white; font-family: 'Advent Pro', sans-serif;"></div>
-                        <div id="thursdayHours" style="text-align: center; color: white; font-family: 'Advent Pro', sans-serif;"></div>
-                        <div id="fridayHours" style="text-align: center; color: white; font-family: 'Advent Pro', sans-serif;"></div>
-                        <div id="saturdayHours" style="text-align: center; color: white; font-family: 'Advent Pro', sans-serif;"></div>
-                        <div id="sundayHours" style="text-align: center; color: white; font-family: 'Advent Pro', sans-serif;"></div>
+                        <h2 class="text-center" style="font-size: 40px; text-align: center">Nos horaires:</h2>
+                        <div id="mondayHours" style="text-align: center;"></div>
+                        <div id="tuesdayHours" style="text-align: center;"></div>
+                        <div id="wednesdayHours" style="text-align: center;"></div>
+                        <div id="thursdayHours" style="text-align: center;"></div>
+                        <div id="fridayHours" style="text-align: center;"></div>
+                        <div id="saturdayHours" style="text-align: center;"></div>
+                        <div id="sundayHours" style="text-align: center;"></div>
                     </section>
                 </div>
             </div>
         </div>
     </section>
-    <!-- Include jQuery for making AJAX requests (before your custom script) -->
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Make an AJAX request to fetch opening hours from your JSON file
-            $.ajax({
-                url: 'opening_hours.json', // Replace with the actual path to your JSON file
-                dataType: 'json',
-                success: function (data) {
-                    var daysOfWeek = {
-                        'Monday': 'Lundi',
-                        'Tuesday': 'Mardi',
-                        'Wednesday': 'Mercredi',
-                        'Thursday': 'Jeudi',
-                        'Friday': 'Vendredi',
-                        'Saturday': 'Samedi',
-                        'Sunday': 'Dimanche'
-                    };
-    
-                    for (var day in daysOfWeek) {
-                        var opening = data[day + 'Opening'];
-                        var closing = data[day + 'Closing'];
-                        var hoursText = '';
-    
-                        if (opening === 'Closed') {
-                            hoursText = daysOfWeek[day] + ': Fermé';
-                        } else {
-                            hoursText = daysOfWeek[day] + ': ' + opening + ' - ' + closing;
-                        }
-    
-                        $('#' + day.toLowerCase() + 'Hours').text(hoursText);
-                    }
-                },
-                error: function () {
-                    // Handle error when opening hours cannot be fetched
-                    $('.hours').text('Error fetching opening hours');
-                }
-            });
-        });
-    </script>
-    
-    
+    <script src="scripts/displayHours.js"></script>
 
 </body>
 

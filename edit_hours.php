@@ -7,38 +7,7 @@
     <title>opening-hours</title>
     <link rel="stylesheet" href="styles/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles/css/Login-Form-Basic-icons.css">
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Add an event listener to each checkbox and its associated select element
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach(function (checkbox) {
-            const associatedOpeningSelect = document.querySelector('select[name="' + checkbox.id.replace('closed', '') + '"]');
-            const associatedClosingSelect = document.querySelector('select[name="' + checkbox.id.replace('closed', '').replace('Opening', 'Closing') + '"]');
-            
-            // Add an event listener to the checkbox
-            checkbox.addEventListener('change', function () {
-                if (checkbox.checked) {
-                    associatedOpeningSelect.disabled = true;
-                    associatedClosingSelect.disabled = true;
-                } else {
-                    associatedOpeningSelect.disabled = false;
-                    associatedClosingSelect.disabled = false;
-                }
-            });
-        });
-    });
-
-    // Get all elements whose IDs match the pattern "closedsundayOpening"
-    const elementsToChange = document.querySelectorAll('[id^="closedsundayOpening"]');
-
-    // Loop through the matched elements and change their IDs
-    elementsToChange.forEach(element => {
-    const newId = element.id.replace('closed', 'Closing').replace('Opening', ''); // Replace 'closed' with 'Closing' and 'Opening' with an empty string
-    element.id = newId; // Set the new ID
-    });
-    </script>
-
+    <script src= "scripts/disableDropdown.js"></script>
 </head>
 
 <?php
@@ -86,6 +55,7 @@
                                         echo '</div>';
                                     }
                                 ?>
+
                                 <div><button type="submit" class="btn btn-primary d-block w-100">Mettre à jour</button></div>
                             </form>
                         </div>
@@ -96,59 +66,7 @@
     </section>
     <script src="styles/js/bootstrap.min.js"></script>
     <script src="styles/js/bs-init.js"></script>
+    <script src="scripts/udpateOpeningHours.js"></script>
 
-    <script>
-    // Function to update opening hours
-    function updateOpeningHours() {
-    // Loop through each day to gather the data
-    const days_opening = ['mondayOpening', 'tuesdayOpening', 'wednesdayOpening', 'thursdayOpening', 'fridayOpening', 'saturdayOpening', 'sundayOpening'];
-    const closing = ['mondayClosing', 'tuesdayClosing', 'wednesdayClosing', 'thursdayClosing', 'fridayClosing', 'saturdayClosing', 'sundayClosing'];
-    const requestData = {};
-
-    days_opening.forEach(function (day) {
-        const selectElement = document.getElementById(day);
-        const checkboxElement = document.getElementById('closed' + day.charAt(0).toUpperCase() + day.slice(1)); // Construct checkbox ID based on the day
-
-        const isClosed = checkboxElement.checked;
-        const openingHours = isClosed ? 'Closed' : selectElement.value;
-
-        requestData[day] = openingHours;
-    });
-
-    days_closing.forEach(function (day) {
-        const selectElement = document.getElementById(day);
-        const checkboxElement = document.getElementById('closed' + day.charAt(0).toUpperCase() + day.slice(1)); // Construct checkbox ID based on the day
-
-        const isClosed = checkboxElement.checked;
-        const closingHours = isClosed ? 'Closed' : selectElement.value;
-
-        requestData[day] = closingHours;
-    });
-
-    // Update opening hours in the JSON file
-    fetch('update_hours.php', {
-        method: 'POST',
-        body: JSON.stringify(requestData),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data); // Log the response from the server
-
-        // Fetch and display updated opening hours
-        fetchAndDisplayOpeningHours();
-    })
-    .catch(error => {
-        console.error('Error updating opening hours:', error);
-    });
-}
-
-
-</script>
-
-    </div>
 </body>
-
 </html>
