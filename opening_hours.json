@@ -1,9 +1,16 @@
 {
-    "Monday": null,
-    "Tuesday": "18:00-22:00",
-    "Wednesday": null,
-    "Thursday": null,
-    "Friday": "18:00-22:00",
-    "Saturday": "18:00-22:00",
-    "Sunday": "18:00-21:30"
+    "MondayOpening": "Closed",
+    "TuesdayOpening": "Closed",
+    "WednesdayOpening": "18:00",
+    "ThursdayOpening": "18:00",
+    "FridayOpening": "19:00",
+    "SaturdayOpening": "19:00",
+    "SundayOpening": "18:00",
+    "MondayClosing": "21:00",
+    "TuesdayClosing": "21:00",
+    "WednesdayClosing": "21:00",
+    "ThursdayClosing": "21:00",
+    "FridayClosing": "22:00",
+    "SaturdayClosing": null,
+    "SundayClosing": "21:00"
 }

@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         ?>
 
-        <h2>Edit Opening Hours</h2>
         <div class="container mt-5">
             <h2 class="mb-4">Éditer les heures d'ouverture</h2>
             <form method="post" action="update_hours.php" onsubmit="updateOpeningHours(); return false;">
@@ -41,7 +40,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 <?php
                     $days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
                     $days_id = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-                    $options = ['18:00-22:00', '18:00-21:30'];
+                    $options_opening = ['18:00', '19:00'];
+                    $options_closing = ['21:00', '22:00'];
                     
                     for ($i = 0; $i < count($days); $i++) {
                         $day = $days[$i];
@@ -49,12 +49,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     
                         echo '<div class="form-group">';
                         echo '<label for="' . strtolower($day_id) . '">' . $day . ':</label>';
-                        echo '<select class="form-control" id="' . strtolower($day_id) . '" name="' . strtolower($day_id) . '">';
-                        foreach ($options as $option) {
+                        echo '<select class="form-control" id="' . strtolower($day_id) . 'Opening" name="' . strtolower($day_id) . 'Opening">';
+                        foreach ($options_opening as $option) {
                             echo '<option value="' . $option . '">' . $option . '</option>';
                         }
                         echo '</select>';
-                        echo '<input type="checkbox" id="closed' .strtolower($day_id) . '" name="closed' .strtolower($day_id) . '"> Fermé';
+                        echo '<select class="form-control" id="' . strtolower($day_id) . 'Closing" name="' . strtolower($day_id) . 'Closing">';
+                        foreach ($options_closing as $option) {
+                            echo '<option value="' . $option . '">' . $option . '</option>';
+                        }
+                        echo '</select>';
+                        echo '<input type="checkbox" id="closed' .strtolower($day_id) . 'Opening" name="closed' .strtolower($day_id) . 'Opening"> Fermé';
                         echo '</div>';
                     }
                 ?>
@@ -68,10 +73,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // Function to update opening hours
     function updateOpeningHours() {
     // Loop through each day to gather the data
-    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+    const days_opening = ['mondayOpening', 'tuesdayOpening', 'wednesdayOpening', 'thursdayOpening', 'fridayOpening', 'saturdayOpening', 'sundayOpening'];
+    const closing = ['mondayClosing', 'tuesdayClosing', 'wednesdayClosing', 'thursdayClosing', 'fridayClosing', 'saturdayClosing', 'sundayClosing'];
     const requestData = {};
 
-    days.forEach(function (day) {
+    days_opening.forEach(function (day) {
         const selectElement = document.getElementById(day);
         const checkboxElement = document.getElementById('closed' + day.charAt(0).toUpperCase() + day.slice(1)); // Construct checkbox ID based on the day
 
@@ -79,6 +85,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const openingHours = isClosed ? 'Closed' : selectElement.value;
 
         requestData[day] = openingHours;
+    });
+
+    days_closing.forEach(function (day) {
+        const selectElement = document.getElementById(day);
+        const checkboxElement = document.getElementById('closed' + day.charAt(0).toUpperCase() + day.slice(1)); // Construct checkbox ID based on the day
+
+        const isClosed = checkboxElement.checked;
+        const closingHours = isClosed ? 'Closed' : selectElement.value;
+
+        requestData[day] = closingHours;
     });
 
     // Update opening hours in the JSON file

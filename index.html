@@ -48,13 +48,13 @@
                     }
 
                     // Get the opening hours for each day and display them
-                    $('#mondayHours').text('Lundi: ' + formatOpeningHours(data['Monday']));
-                    $('#tuesdayHours').text('Mardi: ' + formatOpeningHours(data['Tuesday']));
-                    $('#wednesdayHours').text('Mercredi: ' + formatOpeningHours(data['Wednesday']));
-                    $('#thursdayHours').text('Jeudi: ' + formatOpeningHours(data['Thursday']));
-                    $('#fridayHours').text('Vendredi: ' + formatOpeningHours(data['Friday']));
-                    $('#saturdayHours').text('Samedi: ' + formatOpeningHours(data['Saturday']));
-                    $('#sundayHours').text('Dimanche: ' + formatOpeningHours(data['Sunday']));
+                    $('#mondayHours').text('Lundi: ' + formatOpeningHours(data['MondayOpening']) + ' - ' + formatOpeningHours(data['MondayClosing']));
+                    $('#tuesdayHours').text('Mardi: ' + formatOpeningHours(data['TuesdayOpening']) + ' - ' + formatOpeningHours(data['TuesdayClosing']));
+                    $('#wednesdayHours').text('Mercredi: ' + formatOpeningHours(data['WednesdayOpening']) + ' - ' + formatOpeningHours(data['WednesdayClosing']));
+                    $('#thursdayHours').text('Jeudi: ' + formatOpeningHours(data['ThursdayOpening']) + ' - ' + formatOpeningHours(data['ThursdayClosing']));
+                    $('#fridayHours').text('Vendredi: ' + formatOpeningHours(data['FridayOpening']) + ' - ' + formatOpeningHours(data['FridayClosing']));
+                    $('#saturdayHours').text('Samedi: ' + formatOpeningHours(data['SaturdayOpening']) + ' - ' + formatOpeningHours(data['SaturdayClosing']));
+                    $('#sundayHours').text('Dimanche: ' + formatOpeningHours(data['SundayOpening']) + ' - ' + formatOpeningHours(data['SundayClosing']));
                 },
                 error: function () {
                     // Handle error when opening hours cannot be fetched
