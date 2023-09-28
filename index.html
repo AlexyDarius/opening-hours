@@ -38,23 +38,50 @@
                 url: 'opening_hours.json', // Replace with the actual path to your JSON file
                 dataType: 'json',
                 success: function (data) {
-                    // Function to format opening hours for display
-                    function formatOpeningHours(hours) {
-                        if (hours === 'Closed') {
-                            return 'Fermé';
-                        } else {
-                            return hours;
-                        }
-                    }
 
                     // Get the opening hours for each day and display them
-                    $('#mondayHours').text('Lundi: ' + formatOpeningHours(data['MondayOpening']) + ' - ' + formatOpeningHours(data['MondayClosing']));
-                    $('#tuesdayHours').text('Mardi: ' + formatOpeningHours(data['TuesdayOpening']) + ' - ' + formatOpeningHours(data['TuesdayClosing']));
-                    $('#wednesdayHours').text('Mercredi: ' + formatOpeningHours(data['WednesdayOpening']) + ' - ' + formatOpeningHours(data['WednesdayClosing']));
-                    $('#thursdayHours').text('Jeudi: ' + formatOpeningHours(data['ThursdayOpening']) + ' - ' + formatOpeningHours(data['ThursdayClosing']));
-                    $('#fridayHours').text('Vendredi: ' + formatOpeningHours(data['FridayOpening']) + ' - ' + formatOpeningHours(data['FridayClosing']));
-                    $('#saturdayHours').text('Samedi: ' + formatOpeningHours(data['SaturdayOpening']) + ' - ' + formatOpeningHours(data['SaturdayClosing']));
-                    $('#sundayHours').text('Dimanche: ' + formatOpeningHours(data['SundayOpening']) + ' - ' + formatOpeningHours(data['SundayClosing']));
+                    if(data['MondayOpening'] == 'Closed'){
+                        $('#mondayHours').text('Lundi: Fermé');
+                    }
+                    else{
+                        $('#mondayHours').text('Lundi: ' + data['MondayOpening'] + ' - ' + data['MondayClosing']);
+                    }
+                    if(data['TuesdayOpening'] == 'Closed'){
+                        $('#tuesdayHours').text('Mardi: Fermé');
+                    }
+                    else{
+                        $('#tuesdayHours').text('Mardi: ' + data['TuesdayOpening'] + ' - ' + data['TuesdayClosing']);
+                    }
+                    if(data['WednesdayOpening'] == 'Closed'){
+                        $('#wednesdayHours').text('Mercredi: Fermé');
+                    }
+                    else{
+                        $('#wednesdayHours').text('Mercredi: ' + data['WednesdayOpening'] + ' - ' + data['WednesdayClosing']);
+                    }
+                    if(data['ThursdayOpening'] == 'Closed'){
+                        $('#thursdayHours').text('Jeudi: Fermé');
+                    }
+                    else{
+                        $('#thursdayHours').text('Jeudi: ' + data['ThursdayOpening'] + ' - ' + data['ThursdayClosing']);
+                    }
+                    if(data['FridayOpening'] == 'Closed'){
+                        $('#fridayHours').text('Vendredi: Fermé');
+                    }
+                    else{
+                        $('#fridayHours').text('Vendredi: ' + data['FridayOpening'] + ' - ' + data['FridayClosing']);
+                    }
+                    if(data['SaturdayOpening'] == 'Closed'){
+                        $('#saturdayHours').text('Samedi: Fermé');
+                    }
+                    else{
+                        $('#saturdayHours').text('Samedi: ' + data['SaturdayOpening'] + ' - ' + data['SaturdayClosing']);
+                    }
+                    if(data['SundayOpening'] == 'Closed'){
+                        $('#sundayHours').text('Dimanche: Fermé');
+                    }
+                    else{
+                        $('#sundayHours').text('Dimanche: ' + data['SundayOpening'] + ' - ' + data['SundayClosing']);
+                    }
                 },
                 error: function () {
                     // Handle error when opening hours cannot be fetched
