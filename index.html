@@ -38,64 +38,39 @@
                 url: 'opening_hours.json', // Replace with the actual path to your JSON file
                 dataType: 'json',
                 success: function (data) {
-
-                    // Get the opening hours for each day and display them
-                    if(data['MondayOpening'] == 'Closed'){
-                        $('#mondayHours').text('Lundi: Fermé');
-                    }
-                    else{
-                        $('#mondayHours').text('Lundi: ' + data['MondayOpening'] + ' - ' + data['MondayClosing']);
-                    }
-                    if(data['TuesdayOpening'] == 'Closed'){
-                        $('#tuesdayHours').text('Mardi: Fermé');
-                    }
-                    else{
-                        $('#tuesdayHours').text('Mardi: ' + data['TuesdayOpening'] + ' - ' + data['TuesdayClosing']);
-                    }
-                    if(data['WednesdayOpening'] == 'Closed'){
-                        $('#wednesdayHours').text('Mercredi: Fermé');
-                    }
-                    else{
-                        $('#wednesdayHours').text('Mercredi: ' + data['WednesdayOpening'] + ' - ' + data['WednesdayClosing']);
-                    }
-                    if(data['ThursdayOpening'] == 'Closed'){
-                        $('#thursdayHours').text('Jeudi: Fermé');
-                    }
-                    else{
-                        $('#thursdayHours').text('Jeudi: ' + data['ThursdayOpening'] + ' - ' + data['ThursdayClosing']);
-                    }
-                    if(data['FridayOpening'] == 'Closed'){
-                        $('#fridayHours').text('Vendredi: Fermé');
-                    }
-                    else{
-                        $('#fridayHours').text('Vendredi: ' + data['FridayOpening'] + ' - ' + data['FridayClosing']);
-                    }
-                    if(data['SaturdayOpening'] == 'Closed'){
-                        $('#saturdayHours').text('Samedi: Fermé');
-                    }
-                    else{
-                        $('#saturdayHours').text('Samedi: ' + data['SaturdayOpening'] + ' - ' + data['SaturdayClosing']);
-                    }
-                    if(data['SundayOpening'] == 'Closed'){
-                        $('#sundayHours').text('Dimanche: Fermé');
-                    }
-                    else{
-                        $('#sundayHours').text('Dimanche: ' + data['SundayOpening'] + ' - ' + data['SundayClosing']);
+                    var daysOfWeek = {
+                        'Monday': 'Lundi',
+                        'Tuesday': 'Mardi',
+                        'Wednesday': 'Mercredi',
+                        'Thursday': 'Jeudi',
+                        'Friday': 'Vendredi',
+                        'Saturday': 'Samedi',
+                        'Sunday': 'Dimanche'
+                    };
+    
+                    for (var day in daysOfWeek) {
+                        var opening = data[day + 'Opening'];
+                        var closing = data[day + 'Closing'];
+                        var hoursText = '';
+    
+                        if (opening === 'Closed') {
+                            hoursText = daysOfWeek[day] + ': Fermé';
+                        } else {
+                            hoursText = daysOfWeek[day] + ': ' + opening + ' - ' + closing;
+                        }
+    
+                        $('#' + day.toLowerCase() + 'Hours').text(hoursText);
                     }
                 },
                 error: function () {
                     // Handle error when opening hours cannot be fetched
-                    $('#mondayHours').text('Error fetching opening hours');
-                    $('#tuesdayHours').text('Error fetching opening hours');
-                    $('#wednesdayHours').text('Error fetching opening hours');
-                    $('#thursdayHours').text('Error fetching opening hours');
-                    $('#fridayHours').text('Error fetching opening hours');
-                    $('#saturdayHours').text('Error fetching opening hours');
-                    $('#sundayHours').text('Error fetching opening hours');
+                    $('.hours').text('Error fetching opening hours');
                 }
             });
         });
     </script>
+    
+    
 
 </body>
 
