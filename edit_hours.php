@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 associatedClosingSelect.disabled = true;
             } else {
                 associatedOpeningSelect.disabled = false;
-                associatedClosingSelect.disabled = true;
+                associatedClosingSelect.disabled = false;
             }
         });
     });
