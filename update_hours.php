@@ -25,12 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     'SaturdayClosing' => isset($_POST['saturdayClosing']) ? $_POST['saturdayClosing'] : 'Closed',
     'SundayClosing' => isset($_POST['sundayClosing']) ? $_POST['sundayClosing'] : 'Closed'
 );
-    
     $updatedOpeningHours = json_encode($newHours, JSON_PRETTY_PRINT);
     file_put_contents($openingHoursFile, $updatedOpeningHours);
 
     $response = ['message' => 'Opening hours updated successfully'];
     echo json_encode($response);
+
+    header('Location: index.html'); // Redirect to the opening hours editing page
+    
 } else {
     http_response_code(405); // Method Not Allowed
     echo json_encode(['error' => 'Method not allowed']);
