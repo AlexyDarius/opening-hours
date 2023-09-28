@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $entered_username = $_POST['username'];
     $entered_password = $_POST['password'];
 
-    if ($entered_username === $valid_username && password_verify($enteredpassword, $hashed_password)) {
+    if ($entered_username === $valid_username && password_verify($entered_password, $hashed_password)) {
         $_SESSION['authenticated'] = true;
         header('Location: edit_hours.php'); // Redirect to the opening hours editing page
         exit;
