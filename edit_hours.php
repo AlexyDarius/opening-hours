@@ -2,7 +2,25 @@
 <html lang="fr">
 
 <head>
-    <!-- Add your CSS and fonts here -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Add an event listener to each checkbox and its associated select element
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(function (checkbox) {
+        const associatedSelect = document.querySelector('select[name="' + checkbox.id.replace('closed', '') + '"]');
+        
+        // Add an event listener to the checkbox
+        checkbox.addEventListener('change', function () {
+            if (checkbox.checked) {
+                associatedSelect.disabled = true;
+            } else {
+                associatedSelect.disabled = false;
+            }
+        });
+    });
+});
+
+</script>
 </head>
 
 <body style="background: rgb(255,255,255);">
@@ -23,7 +41,7 @@
                 <?php
                     $days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
                     $days_id = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-                    $options = ['Fermé', '18:00-22:00', '18:00-21:30'];
+                    $options = ['18:00-22:00', '18:00-21:30'];
                     
                     for ($i = 0; $i < count($days); $i++) {
                         $day = $days[$i];
@@ -32,12 +50,11 @@
                         echo '<div class="form-group">';
                         echo '<label for="' . strtolower($day_id) . '">' . $day . ':</label>';
                         echo '<select class="form-control" id="' . strtolower($day_id) . '" name="' . strtolower($day_id) . '">';
-                    
                         foreach ($options as $option) {
                             echo '<option value="' . $option . '">' . $option . '</option>';
                         }
-                    
                         echo '</select>';
+                        echo '<input type="checkbox" id="closed' .strtolower($day_id) . '" name="closed' .strtolower($day_id) . '"> Fermé';
                         echo '</div>';
                     }
                 ?>
@@ -47,58 +64,44 @@
             </form>
         </div>
 
-        <div id="currentHours">
-            <!-- Current opening hours will be displayed here -->
-        </div>
-
         <script>
     // Function to update opening hours
     function updateOpeningHours() {
-        const selectedOption = document.getElementById('newHours');
-        const newHours = selectedOption.value;
+    // Loop through each day to gather the data
+    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+    const requestData = {};
 
-        // Update opening hours in the JSON file
-        fetch('update_hours.php', {
-            method: 'POST',
-            body: JSON.stringify({ newHours }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data); // Log the response from the server
+    days.forEach(function (day) {
+        const selectElement = document.getElementById(day);
+        const checkboxElement = document.getElementById('closed' + day.charAt(0).toUpperCase() + day.slice(1)); // Construct checkbox ID based on the day
 
-            // Fetch and display updated opening hours
-            fetchAndDisplayOpeningHours();
-        })
-        .catch(error => {
-            console.error('Error updating opening hours:', error);
-        });
-    }
+        const isClosed = checkboxElement.checked;
+        const openingHours = isClosed ? 'Closed' : selectElement.value;
 
-    // Function to fetch and display opening hours from JSON
-    function fetchAndDisplayOpeningHours() {
-        fetch('opening_hours.json')
-            .then(response => response.json())
-            .then(data => {
-                const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-                const openingHours = data[today];
+        requestData[day] = openingHours;
+    });
 
-                if (openingHours) {
-                    document.getElementById('currentHours').innerHTML = `<p>${today}: ${openingHours}</p>`;
-                } else {
-                    document.getElementById('currentHours').innerHTML = `<p>Opening hours not available for ${today}</p>`;
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching opening hours:', error);
-                document.getElementById('currentHours').innerHTML = '<p>Error fetching opening hours</p>';
-            });
-    }
+    // Update opening hours in the JSON file
+    fetch('update_hours.php', {
+        method: 'POST',
+        body: JSON.stringify(requestData),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data); // Log the response from the server
 
-    // Fetch and display current opening hours when the page loads
-    fetchAndDisplayOpeningHours();
+        // Fetch and display updated opening hours
+        fetchAndDisplayOpeningHours();
+    })
+    .catch(error => {
+        console.error('Error updating opening hours:', error);
+    });
+}
+
+
 </script>
 
     </div>

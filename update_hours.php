@@ -10,13 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $openingHoursFile = 'opening_hours.json';
     
     $newHours = array(
-        'Monday' => sanitizeAndValidateOpeningHours($_POST['monday']),
-        'Tuesday' => sanitizeAndValidateOpeningHours($_POST['tuesday']),
-        'Wednesday' => sanitizeAndValidateOpeningHours($_POST['wednesday']),
-        'Thursday' => sanitizeAndValidateOpeningHours($_POST['thursday']),
-        'Friday' => sanitizeAndValidateOpeningHours($_POST['friday']),
-        'Saturday' => sanitizeAndValidateOpeningHours($_POST['saturday']),
-        'Sunday' => sanitizeAndValidateOpeningHours($_POST['sunday'])
+        'Monday' => isset($_POST['monday']) ? sanitizeAndValidateOpeningHours($_POST['monday']) : 'Closed',
+        'Tuesday' => isset($_POST['tuesday']) ? sanitizeAndValidateOpeningHours($_POST['tuesday']) : 'Closed',
+        'Wednesday' => isset($_POST['wednesday']) ? sanitizeAndValidateOpeningHours($_POST['wednesday']) : 'Closed',
+        'Thursday' => isset($_POST['thursday']) ? sanitizeAndValidateOpeningHours($_POST['thursday']) : 'Closed',
+        'Friday' => isset($_POST['friday']) ? sanitizeAndValidateOpeningHours($_POST['friday']) : 'Closed',
+        'Saturday' => isset($_POST['saturday']) ? sanitizeAndValidateOpeningHours($_POST['saturday']) : 'Closed',
+        'Sunday' => isset($_POST['sunday']) ? sanitizeAndValidateOpeningHours($_POST['sunday']) : 'Closed'
     );
     
     $updatedOpeningHours = json_encode($newHours, JSON_PRETTY_PRINT);
