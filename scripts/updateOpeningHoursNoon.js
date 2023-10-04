@@ -1,5 +1,5 @@
 // Function to update opening hours
-function updateOpeningHours() {
+function updateOpeningHoursNoon() {
     // Loop through each day to gather the data
     const days_opening = ['mondayOpening', 'tuesdayOpening', 'wednesdayOpening', 'thursdayOpening', 'fridayOpening', 'saturdayOpening', 'sundayOpening'];
     const closing = ['mondayClosing', 'tuesdayClosing', 'wednesdayClosing', 'thursdayClosing', 'fridayClosing', 'saturdayClosing', 'sundayClosing'];
