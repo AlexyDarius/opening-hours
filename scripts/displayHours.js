@@ -15,14 +15,22 @@ $(document).ready(function () {
             };
 
             for (var day in daysOfWeek) {
+                var openingM = data[day + 'OpeningM'];
+                var closingM = data[day + 'ClosingM'];
                 var opening = data[day + 'Opening'];
                 var closing = data[day + 'Closing'];
                 var hoursText = '';
 
-                if (opening === 'Closed') {
-                    hoursText = daysOfWeek[day] + ': Fermé';
+                if (openingM === 'Closed') {
+                    hoursText = daysOfWeek[day] + ': Fermé le midi / ';
                 } else {
-                    hoursText = daysOfWeek[day] + ': ' + opening + ' - ' + closing;
+                    hoursText = daysOfWeek[day] + ': ' + openingM + ' - ' + closingM + ' / ';
+                }
+
+                if (opening === 'Closed') {
+                    hoursText = hoursText + 'Fermé le soir';
+                } else {
+                    hoursText = hoursText + opening + ' - ' + closing;
                 }
 
                 $('#' + day.toLowerCase() + 'Hours').text(hoursText);
